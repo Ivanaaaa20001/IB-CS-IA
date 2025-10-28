@@ -2,12 +2,12 @@
 
 ## Project Overview
 
-This is an IB Computer Science Internal Assessment (IA) project. The project appears to be developing an inventory management system using web technologies.
+This is an IB Computer Science Internal Assessment (IA) project. The project is developing an inventory management system using web technologies.
 
 ## Project Structure
 
-- `index.html` - Main entry point for the application
-- `settings/index.html` - Settings page for the application
+- `index.html` - Main entry point for the application (currently a placeholder)
+- `settings/index.html` - Settings page for the application (currently a placeholder)
 - `README.md` - Project documentation
 - `LICENSE` - MIT License
 
