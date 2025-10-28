@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is an IB Computer Science Internal Assessment (IA) project. The project is developing an inventory management system using web technologies.
+This is an IB Computer Science Internal Assessment (IA) project developing an inventory management system using web technologies.
 
 ## Project Structure
 
