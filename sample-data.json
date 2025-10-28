@@ -1,0 +1,63 @@
+{
+  "products": {
+    "prod001": {
+      "name": "Classic Chocolate Croissant",
+      "description": "Buttery, flaky croissant filled with rich dark chocolate",
+      "price": 4.50,
+      "available": true,
+      "imageUrl": "https://via.placeholder.com/280x250/d4956b/ffffff?text=Chocolate+Croissant"
+    },
+    "prod002": {
+      "name": "Strawberry Custard Tart",
+      "description": "Fresh strawberries on silky vanilla custard in a crisp pastry shell",
+      "price": 5.00,
+      "available": true,
+      "imageUrl": "https://via.placeholder.com/280x250/d4956b/ffffff?text=Strawberry+Tart"
+    },
+    "prod003": {
+      "name": "Cinnamon Roll",
+      "description": "Soft, warm cinnamon roll with cream cheese frosting",
+      "price": 3.75,
+      "available": true,
+      "imageUrl": "https://via.placeholder.com/280x250/d4956b/ffffff?text=Cinnamon+Roll"
+    },
+    "prod004": {
+      "name": "Blueberry Muffin",
+      "description": "Moist muffin bursting with fresh blueberries",
+      "price": 3.25,
+      "available": true,
+      "imageUrl": "https://via.placeholder.com/280x250/d4956b/ffffff?text=Blueberry+Muffin"
+    },
+    "prod005": {
+      "name": "Apple Danish",
+      "description": "Flaky pastry with spiced apple filling and vanilla glaze",
+      "price": 4.25,
+      "available": true,
+      "imageUrl": "https://via.placeholder.com/280x250/d4956b/ffffff?text=Apple+Danish"
+    },
+    "prod006": {
+      "name": "Chocolate Chip Cookie",
+      "description": "Chewy cookie loaded with chocolate chips",
+      "price": 2.50,
+      "available": true,
+      "imageUrl": "https://via.placeholder.com/280x250/d4956b/ffffff?text=Chocolate+Cookie"
+    },
+    "prod007": {
+      "name": "Lemon Meringue Tart",
+      "description": "Tangy lemon curd topped with fluffy meringue",
+      "price": 5.50,
+      "available": true,
+      "imageUrl": "https://via.placeholder.com/280x250/d4956b/ffffff?text=Lemon+Meringue"
+    },
+    "prod008": {
+      "name": "Almond Croissant",
+      "description": "Croissant filled with almond cream and topped with sliced almonds",
+      "price": 4.75,
+      "available": true,
+      "imageUrl": "https://via.placeholder.com/280x250/d4956b/ffffff?text=Almond+Croissant"
+    }
+  },
+  "settings": {
+    "dailyOrderLimit": 20
+  }
+}
