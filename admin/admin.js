@@ -2,6 +2,13 @@
 let currentUser = null;
 let currentFilter = 'all';
 
+// HTML escape function to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Check if user is already logged in
     firebase.auth().onAuthStateChanged((user) => {
@@ -135,36 +142,48 @@ function displayOrders(orders) {
 
 function createOrderElement(order) {
     const orderDiv = document.createElement('div');
-    orderDiv.className = `order-item ${order.status}`;
+    orderDiv.className = `order-item ${escapeHtml(order.status)}`;
 
     const orderDate = new Date(order.orderDate).toLocaleString();
+    
+    // Escape all user-provided content
     const itemsList = order.items.map(item => 
-        `${item.name} x ${item.quantity} ($${(item.price * item.quantity).toFixed(2)})`
+        `${escapeHtml(item.name)} x ${parseInt(item.quantity)} ($${(parseFloat(item.price) * parseInt(item.quantity)).toFixed(2)})`
     ).join('<br>');
+
+    const safeOrderId = escapeHtml(order.id.substr(-8));
+    const safeStatus = escapeHtml(order.status);
+    const safeCustomerName = escapeHtml(order.customerName);
+    const safeCustomerPhone = escapeHtml(order.customerPhone);
+    const safeCustomerEmail = escapeHtml(order.customerEmail);
+    const safeDeliveryDate = escapeHtml(order.deliveryDate);
+    const safeDeliveryTime = escapeHtml(order.deliveryTime);
+    const safeDeliveryAddress = escapeHtml(order.deliveryAddress);
+    const safeSpecialInstructions = order.specialInstructions ? escapeHtml(order.specialInstructions) : '';
 
     orderDiv.innerHTML = `
         <div class="order-header">
-            <span class="order-id">Order #${order.id.substr(-8)}</span>
-            <span class="order-status ${order.status}">${order.status.toUpperCase()}</span>
+            <span class="order-id">Order #${safeOrderId}</span>
+            <span class="order-status ${safeStatus}">${safeStatus.toUpperCase()}</span>
         </div>
         <div class="order-details">
             <div class="order-detail">
-                <strong>Customer:</strong> ${order.customerName}
+                <strong>Customer:</strong> ${safeCustomerName}
             </div>
             <div class="order-detail">
-                <strong>Phone:</strong> ${order.customerPhone}
+                <strong>Phone:</strong> ${safeCustomerPhone}
             </div>
             <div class="order-detail">
-                <strong>Email:</strong> ${order.customerEmail}
+                <strong>Email:</strong> ${safeCustomerEmail}
             </div>
             <div class="order-detail">
                 <strong>Order Date:</strong> ${orderDate}
             </div>
             <div class="order-detail">
-                <strong>Delivery Date:</strong> ${order.deliveryDate}
+                <strong>Delivery Date:</strong> ${safeDeliveryDate}
             </div>
             <div class="order-detail">
-                <strong>Delivery Time:</strong> ${order.deliveryTime}
+                <strong>Delivery Time:</strong> ${safeDeliveryTime}
             </div>
         </div>
         <div class="order-items">
@@ -172,25 +191,25 @@ function createOrderElement(order) {
             ${itemsList}
         </div>
         <div class="order-detail">
-            <strong>Delivery Address:</strong> ${order.deliveryAddress}
+            <strong>Delivery Address:</strong> ${safeDeliveryAddress}
         </div>
         ${order.specialInstructions ? `
             <div class="order-detail">
-                <strong>Special Instructions:</strong> ${order.specialInstructions}
+                <strong>Special Instructions:</strong> ${safeSpecialInstructions}
             </div>
         ` : ''}
         <div class="order-detail">
-            <strong>Total Amount:</strong> $${order.totalAmount.toFixed(2)}
+            <strong>Total Amount:</strong> $${parseFloat(order.totalAmount).toFixed(2)}
         </div>
         <div class="order-actions">
-            <select onchange="updateOrderStatus('${order.id}', this.value)" class="status-select">
+            <select onchange="updateOrderStatus('${safeOrderId}', this.value)" class="status-select">
                 <option value="">Change Status...</option>
                 <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
                 <option value="confirmed" ${order.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
                 <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completed</option>
                 <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
             </select>
-            <button class="btn btn-delete btn-small" onclick="deleteOrder('${order.id}')">Delete</button>
+            <button class="btn btn-delete btn-small" onclick="deleteOrder('${safeOrderId}')">Delete</button>
         </div>
     `;
 
@@ -252,20 +271,26 @@ function createProductElement(productId, product) {
     const productDiv = document.createElement('div');
     productDiv.className = 'product-item';
 
+    // Escape user-provided content
+    const safeName = escapeHtml(product.name);
+    const safeDescription = escapeHtml(product.description);
+    const safeProductId = escapeHtml(productId);
+    const safePrice = parseFloat(product.price).toFixed(2);
+
     productDiv.innerHTML = `
         <div class="product-item-info">
-            <div class="product-item-name">${product.name}</div>
-            <div class="product-item-price">$${parseFloat(product.price).toFixed(2)}</div>
-            <div>${product.description}</div>
+            <div class="product-item-name">${safeName}</div>
+            <div class="product-item-price">$${safePrice}</div>
+            <div>${safeDescription}</div>
             <div class="product-item-status">
                 Status: ${product.available !== false ? 'Available' : 'Unavailable'}
             </div>
         </div>
         <div class="product-item-actions">
-            <button class="btn btn-secondary btn-small" onclick="toggleProductAvailability('${productId}', ${product.available !== false})">
+            <button class="btn btn-secondary btn-small" onclick="toggleProductAvailability('${safeProductId}', ${product.available !== false})">
                 ${product.available !== false ? 'Mark Unavailable' : 'Mark Available'}
             </button>
-            <button class="btn btn-delete btn-small" onclick="deleteProduct('${productId}')">Delete</button>
+            <button class="btn btn-delete btn-small" onclick="deleteProduct('${safeProductId}')">Delete</button>
         </div>
     `;
 

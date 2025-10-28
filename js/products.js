@@ -3,6 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
     loadProducts();
 });
 
+// HTML escape function to prevent XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 function loadProducts() {
     const productsGrid = document.getElementById('products-grid');
     
@@ -33,28 +40,35 @@ function createProductCard(productId, product) {
     const card = document.createElement('div');
     card.className = 'product-card';
     
+    // Escape user-provided content to prevent XSS
+    const safeName = escapeHtml(product.name);
+    const safeDescription = escapeHtml(product.description);
+    const safeImageUrl = escapeHtml(product.imageUrl || 'https://via.placeholder.com/280x250?text=Delicious+Pastry');
+    const safeProductId = escapeHtml(productId);
+    const safePrice = parseFloat(product.price).toFixed(2);
+    
     card.innerHTML = `
-        <img src="${product.imageUrl || 'https://via.placeholder.com/280x250?text=Delicious+Pastry'}" 
-             alt="${product.name}" 
+        <img src="${safeImageUrl}" 
+             alt="${safeName}" 
              class="product-image">
         <div class="product-info">
-            <h3 class="product-name">${product.name}</h3>
-            <p class="product-description">${product.description}</p>
-            <p class="product-price">$${parseFloat(product.price).toFixed(2)}</p>
+            <h3 class="product-name">${safeName}</h3>
+            <p class="product-description">${safeDescription}</p>
+            <p class="product-price">$${safePrice}</p>
             ${product.available !== false ? `
                 <div class="product-actions">
                     <div class="quantity-selector">
-                        <button class="quantity-btn" onclick="decreaseQuantity('${productId}')">-</button>
+                        <button class="quantity-btn" onclick="decreaseQuantity('${safeProductId}')">-</button>
                         <input type="number" 
-                               id="qty-${productId}" 
+                               id="qty-${safeProductId}" 
                                class="quantity-input" 
                                value="1" 
                                min="1" 
                                max="50">
-                        <button class="quantity-btn" onclick="increaseQuantity('${productId}')">+</button>
+                        <button class="quantity-btn" onclick="increaseQuantity('${safeProductId}')">+</button>
                     </div>
                     <button class="add-to-cart-btn" 
-                            onclick="addToCart('${productId}', '${product.name}', ${product.price})">
+                            onclick="addToCart('${safeProductId}', '${safeName}', ${safePrice})">
                         Add to Cart
                     </button>
                 </div>
