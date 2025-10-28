@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Bobby's Bakery</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">Bobby's Bakery - Admin</div>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Back to Site</a></li>
+                <li><a href="#" onclick="handleLogout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <section id="login-section" class="admin-section" style="margin-top: 80px;">
+        <div class="container">
+            <div class="admin-card">
+                <h2>Admin Login</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard -->
+    <section id="admin-dashboard" class="admin-section" style="display: none; margin-top: 80px;">
+        <div class="container">
+            <h2 class="section-title">Admin Dashboard</h2>
+            
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="showTab('orders')">Orders</button>
+                <button class="tab-btn" onclick="showTab('products')">Products</button>
+                <button class="tab-btn" onclick="showTab('settings')">Settings</button>
+            </div>
+
+            <!-- Orders Tab -->
+            <div id="orders-tab" class="tab-content active">
+                <div class="admin-card">
+                    <h3>Orders Management</h3>
+                    <div class="filters">
+                        <label>
+                            <input type="radio" name="order-filter" value="all" checked onchange="filterOrders('all')"> All
+                        </label>
+                        <label>
+                            <input type="radio" name="order-filter" value="pending" onchange="filterOrders('pending')"> Pending
+                        </label>
+                        <label>
+                            <input type="radio" name="order-filter" value="confirmed" onchange="filterOrders('confirmed')"> Confirmed
+                        </label>
+                        <label>
+                            <input type="radio" name="order-filter" value="completed" onchange="filterOrders('completed')"> Completed
+                        </label>
+                    </div>
+                    <div id="orders-list" class="orders-list">
+                        <p class="loading">Loading orders...</p>
+                    </div>
+                </div>
+
+                <!-- Calendar View -->
+                <div class="admin-card">
+                    <h3>Order Calendar</h3>
+                    <div id="calendar-container">
+                        <input type="month" id="calendar-month" onchange="updateCalendar()">
+                        <div id="calendar-display" class="calendar-display"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Tab -->
+            <div id="products-tab" class="tab-content">
+                <div class="admin-card">
+                    <h3>Products Management</h3>
+                    <button class="btn btn-primary" onclick="showAddProductForm()">Add New Product</button>
+                    
+                    <div id="add-product-form" class="product-form" style="display: none;">
+                        <h4>Add New Product</h4>
+                        <form id="new-product-form">
+                            <div class="form-group">
+                                <label for="product-name">Product Name *</label>
+                                <input type="text" id="product-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-description">Description *</label>
+                                <textarea id="product-description" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-price">Price ($) *</label>
+                                <input type="number" id="product-price" step="0.01" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-image">Image URL</label>
+                                <input type="text" id="product-image" placeholder="https://example.com/image.jpg">
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <input type="checkbox" id="product-available" checked>
+                                    Available for order
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Product</button>
+                            <button type="button" class="btn btn-secondary" onclick="hideAddProductForm()">Cancel</button>
+                        </form>
+                    </div>
+
+                    <div id="products-list" class="products-list">
+                        <p class="loading">Loading products...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings-tab" class="tab-content">
+                <div class="admin-card">
+                    <h3>Business Settings</h3>
+                    <form id="settings-form">
+                        <div class="form-group">
+                            <label for="daily-order-limit">Daily Order Limit</label>
+                            <input type="number" id="daily-order-limit" min="1" value="20">
+                            <small>Maximum number of orders accepted per day</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Settings</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
