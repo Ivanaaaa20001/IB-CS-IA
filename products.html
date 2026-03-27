@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bakery Products</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="index.html">Log out</a></li>
+        <li><a href="orders.html">Orders</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="inventory.html">Inventory</a></li>
+        <li><a href="finances.html">Finances</a></li>
+    </ul>
+</nav>
+
+<h2>Bobby's Bakery Products</h2>
+
+<form id="ProductForm">
+    <input type="text" id="productName" placeholder="Product name" required>
+    <input type="number" id="productPrice" placeholder="Price" required>
+
+    
+    <div id="recipeContainer">
+        <h3>Select Ingredients</h3>
+    </div>
+
+    <button type="submit">Add Product</button>
+</form>
+
+<h2>Current Products:</h2>
+<ul id="productsList"></ul>
+
+
+<template id="ingredient-template">
+  <div class="ingredient">
+    <label class="ingredient-label"></label>
+    <input
+      type="number"
+      min="0"
+      value="0"
+      class="ingredient-input"
+    >
+  </div>
+</template>
+
+
+<template id="product-template">
+  <li class="product-item">
+    <div class="product-summary">
+      <span class="product-text"></span>
+      <div class="product-actions">
+        <button class="details-btn">View Details</button>
+        <button class="delete-btn">Delete</button>
+      </div>
+    </div>
+    <div class="product-details hidden">
+      <p class="product-recipe"></p>
+    </div>
+  </li>
+</template>
+
+
+<script type="module" src="products.js"></script>
+</body>
+</html>
+

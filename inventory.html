@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bobby's Bakery Inventory</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="index.html">Log out</a></li>
+        <li><a href="orders.html">Orders</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="inventory.html">Inventory</a></li>
+        <li><a href="finances.html">Finances</a></li>
+    </ul>
+</nav>
+
+<h2>Bobby's Bakery Inventory</h2>
+
+<form id="IngredientForm">
+    <input type="text" id="ingredientName" placeholder="Ingredient name" required>
+    <input type="number" id="ingredientQty" placeholder="Quantity (grams or units)" required>
+    <input type="text" id="ingredientUnit" placeholder="Unit (e.g., grams, liters)" required>
+    <input type="number" id="ingredientCost" placeholder="Cost (pesos)" required>
+    <button type="submit">Add Ingredient</button>
+</form>
+
+<h2>Current Inventory</h2>
+<ul id="ingredientsList"></ul>
+
+<template id="inventory-template">
+    <li class="product-item inventory-item">
+        <div class="product-summary inventory-summary">
+            <span class="inventory-text"></span>
+            <div class="product-actions inventory-actions">
+                <button class="details-btn">View Details</button>
+                <button class="add-qty-btn">Add Quantity</button>
+                <button class="delete-btn">Delete</button>
+            </div>
+        </div>
+        <div class="product-details inventory-details hidden">
+            <p class="inventory-info"></p>
+        </div>
+    </li>
+</template>
+
+<script type="module" src="inventory.js"></script>
+</body>
+</html>

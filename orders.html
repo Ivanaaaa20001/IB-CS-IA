@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bakery Orders</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="index.html">Log out</a></li>
+        <li><a href="orders.html">Orders</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="inventory.html">Inventory</a></li>
+        <li><a href="finances.html">Finances</a></li>
+    </ul>
+</nav>
+
+<h2>Create your order:</h2>
+
+<form id="OrdersForm">
+    <input type="text" id="clientName" placeholder="Client name" required>
+    <input type="text" id="address" placeholder="Address" required>
+    <input type="text" id="phone" placeholder="Phone" required>
+    <input type="date" id="date" required>
+
+    <div id="productsDisplay"></div>
+
+    <button type="submit">Add Order</button>
+</form>
+
+<h2>Bobby's Bakery Orders:</h2>
+<ul id="ordersList"></ul>
+
+<template id="order-template">
+  <li class="order-item">
+    <div class="order-summary">
+      <span class="order-name"></span>
+      <span class="order-status"></span>
+
+      <div class="order-actions">
+        <button class="details-btn">View Details</button>
+        <button class="delete-btn">Delete</button>
+        <button class="deliver-btn">Mark as Delivered</button>
+        <button class="cancel-btn">Mark as Cancelled</button>
+      </div>
+    </div>
+
+    <div class="order-details hidden">
+      <p class="order-info"></p>
+    </div>
+  </li>
+</template>
+
+
+<script type="module" src="orders.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bobby's Bakery Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav id="top">
+<h1>Welcome to Bobby's Bakery</h1>
+</nav>
+
+<section id="box">
+  <p>Select your role to continue:</p>
+
+  <div class="role-buttons">
+    <button id="btnClient">Client</button>
+    <button id="btnAdmin">Administrative</button>
+  </div>
+</section>
+
+<script type="module">
+  const btnClient = document.getElementById('btnClient');
+  const btnAdmin  = document.getElementById('btnAdmin');
+
+  btnClient.addEventListener('click', () => {
+    window.location.href = 'client.html';
+  });
+
+  btnAdmin.addEventListener('click', () => {
+    window.location.href = 'admin.html';
+  });
+
+
+
+</script>
+
+
+</body>
+</html>
+
+
